@@ -1,8 +1,15 @@
-import http from 'node:http';
+import * as http from 'node:http';
+import * as dotenv from 'dotenv';
 
-const PORT = process.env.PORT || 4000;
+import router from './routing';
 
-const server = http.createServer();
+dotenv.config();
+
+const PORT = process.env.PORT || 5001;
+
+const server = http.createServer(async (req, res) => {
+  router({ req, res });
+});
 
 server.listen(PORT, (err?: Error) => {
   if (err) {
