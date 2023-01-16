@@ -1,32 +1,33 @@
 import { IncomingMessage, ServerResponse } from 'http';
+import { Routing } from './types';
 import usersController from './users/users.controller';
 
-const routing = {
+const routing: Routing = {
   users: usersController,
 };
 
-const router = (client: { req: IncomingMessage; res: ServerResponse }) => {
-  const url = client.req.url;
-  const method = client.req.method;
+const router = (req: IncomingMessage, res: ServerResponse) => {
+  const url = req.url.replace('/api', '');
+  const method = req.method;
 
   const baseRoute = url.split('/')[1];
   const controller = routing[baseRoute];
 
   if (!controller) {
-    client.res.statusCode = 404;
+    res.statusCode = 404;
     return;
   }
 
-  controller.forEach((handler, req) => {
+  controller.forEach((handler, key) => {
     if (
-      req.method === method &&
-      (req.path === url || url.split('/').length === req.path.split('/').length)
+      key.method === method &&
+      (key.path === url || url.split('/').length === key.path.split('/').length)
     ) {
       try {
-        handler(client.req, client.res);
+        handler(req, res);
       } catch (error) {
-        client.res.statusCode = 500;
-        client.res.end('Unexpected server error');
+        res.statusCode = 500;
+        res.end('Unexpected server error');
       }
     }
   });

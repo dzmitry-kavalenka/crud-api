@@ -7,9 +7,7 @@ dotenv.config();
 
 const PORT = process.env.PORT || 5001;
 
-const server = http.createServer(async (req, res) => {
-  router({ req, res });
-});
+const server = http.createServer(router);
 
 if (require.main === module) {
   server.listen(PORT, (err?: Error) => {
