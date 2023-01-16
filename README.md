@@ -1,15 +1,22 @@
 # 🚀 Simple CRUD API
 
-This project has been created using **webpack-cli**, you can now run
+This project has been created using **webpack-cli**
+
+### Running the application
+
+- Create a `.env` file by copying `.env.default`
+- Install dependencies by running `npm install`
+- Run `npm run start:dev`
+
+### Running Production build
 
 ```
-npm run build
+npm run start:prod
 ```
 
-or
+### Running test
 
 ```
-yarn build
+npm run test
 ```
 
-to bundle your application
