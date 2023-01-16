@@ -11,9 +11,13 @@ const server = http.createServer(async (req, res) => {
   router({ req, res });
 });
 
-server.listen(PORT, (err?: Error) => {
-  if (err) {
-    console.error(err);
-  }
-  console.log(`listening on port ${PORT}`);
-});
+if (require.main === module) {
+  server.listen(PORT, (err?: Error) => {
+    if (err) {
+      console.error(err);
+    }
+    console.log(`listening on port ${PORT}`);
+  });
+}
+
+export default server;
